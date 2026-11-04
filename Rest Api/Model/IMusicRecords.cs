@@ -2,6 +2,6 @@
 {
     public interface IMusicRecords
     {
-        public IEnumerable<MusicRecord> GetAll();
+        public IEnumerable<MusicRecord> GetAllMusicRecords(string? titleFilter = null,string? artistFilter = null,int? publicationYear = null);
     }
 }

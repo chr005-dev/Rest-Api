@@ -11,9 +11,33 @@
             _musicRecords.Add(new MusicRecord { Title = "Song 2", Artist = "Artist 2", Duration = 200, PublicationYear = 2021 });
         }
 
-        public IEnumerable<MusicRecord> GetAll()
+        public IEnumerable<MusicRecord> GetAllMusicRecords(
+    string? titleFilter = null,
+    string? artistFilter = null,
+    int? publicationYear = null)
         {
-            return _musicRecords;
+            IEnumerable<MusicRecord> result = _musicRecords.AsReadOnly();
+
+            if (titleFilter != null)
+            {
+                result = result.Where(r => r.Title.Contains(
+                    titleFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (artistFilter != null)
+            {
+                result = result.Where(r => r.Artist.Contains(
+                    artistFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (publicationYear != null)
+            {
+                result = result.Where(r => r.PublicationYear == publicationYear);
+            }
+
+            return result;
         }
+
+    
     }
 }
