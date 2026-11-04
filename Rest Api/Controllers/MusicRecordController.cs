@@ -4,7 +4,7 @@ using Rest_Api.Model;
 
 namespace Rest_Api.Controllers
 {
-    [Authorize]
+   
     [ApiController]
     [Route("api/[controller]")]
     public class MusicRecordController : ControllerBase
