@@ -3,6 +3,8 @@ using Rest_Api.Model;
 
 namespace Rest_Api.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class MusicRecordController : ControllerBase
     {
         private IMusicRecords _repo;
@@ -12,5 +14,12 @@ namespace Rest_Api.Controllers
             this._repo = repo;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IEnumerable<MusicRecord> GetAll()
+        {
+            return _repo.GetAll();
+        }
     }
 }
