@@ -15,11 +15,30 @@ namespace Rest_Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IEnumerable<MusicRecord> GetAll()
+        [ProducesResponseType(typeof(IEnumerable<MusicRecord>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<IEnumerable<MusicRecord>> GetAll(
+                 [FromQuery] string? titleFilter = null,
+                 [FromQuery] string? artistFilter = null,
+                 [FromQuery] int? publicationYear = null)
         {
-            return _repo.GetAll();
+            try
+            {
+                IEnumerable<MusicRecord> result =
+                    _repo.GetAllMusicRecords(titleFilter, artistFilter, publicationYear);
+
+                if (!result.Any())
+                {
+                    return NoContent();
+                }
+
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
